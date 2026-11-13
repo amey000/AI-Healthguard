@@ -21,56 +21,21 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- FUNCTION TO LOAD LOCAL FONT ---
-def get_base64_of_bin_file(bin_file):
-    try:
-        with open(bin_file, 'rb') as f:
-            data = f.read()
-        return base64.b64encode(data).decode()
-    except FileNotFoundError:
-        return None
-
-# Load the local fonts (UPDATE THESE FILENAMES to match your actual files)
-regular_font_b64 = get_base64_of_bin_file("SF-Pro-Regular.otf")
-bold_font_b64 = get_base64_of_bin_file("SF-Pro-Bold.otf")
-
-# Fallback if files are missing
-font_face_css = ""
-
-if regular_font_b64:
-    font_face_css += f"""
-    @font-face {{
-        font-family: 'SFProRegular';
-        src: url('data:font/otf;base64,{regular_font_b64}') format('opentype');
-        font-weight: normal;
-        font-style: normal;
-    }}
-    """
-
-if bold_font_b64:
-    font_face_css += f"""
-    @font-face {{
-        font-family: 'SFProBold';
-        src: url('data:font/otf;base64,{bold_font_b64}') format('opentype');
-        font-weight: bold;
-        font-style: normal;
-    }}
-    """
-
 # --- CUSTOM CSS ---
+# Fonts: the system font on Apple devices (SF Pro), Inter (free, Google Fonts) elsewhere.
 st.markdown(f"""
     <style>
-    /* 1. Inject the Font Definitions */
-    {font_face_css}
+    /* 1. Load Inter from Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
-    /* 2. Apply Fonts Globally (Use Regular for Body) */
+    /* 2. Apply Fonts Globally */
     html, body, [class*="css"] {{
-        font-family: 'SFProRegular', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
     }}
 
-    /* 3. Apply Bold Font to Headings */
+    /* 3. Bold Headings */
     h1, h2, h3, .stsubheader {{
-        font-family: 'SFProBold', sans-serif;
+        font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
         font-weight: 700 !important;
     }}
     
